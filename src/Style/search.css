@@ -1,0 +1,149 @@
+/* .note-input {
+  display: flex;
+  align-items: center;
+  background-color: #202124;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  width: 50vw;
+  flex-direction: column;
+  border: 2px solid rgb(121, 120, 120);
+}
+
+.note-header input {
+  margin-top: 1vw;
+  width: 25vw;
+  height: 3vw;
+  font-size: 20px;
+  background-color: #202124;
+  color: white;
+  border: none;
+}
+
+.note-form input {
+  width: 25vw;
+  height: 3vw;
+  font-size: 20px;
+  background-color: #202124;
+  color: white;
+  border: none;
+}
+
+.note-form placeholder {
+  color: white;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .note-input {
+    padding: 8px;
+  }
+  .placeholder {
+    font-size: 14px;
+  }
+} */
+
+.note-input {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 10px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    background-color: #202124; /* Dark background as seen in the image */
+    transition: all 0.3s ease;
+    color: white;
+  }
+  
+  .note-input.expanded {
+    max-width: 100%;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .note-form .title-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #555;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    background-color: transparent;
+    color: white;
+  }
+  
+  .note-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  
+  .note-input-field {
+    width: 100%;
+    border: none;
+    padding: 8px;
+    font-size: 16px;
+    outline: none;
+    background-color: transparent;
+    color: white;
+  }
+  
+  .note-header .note-input-field.expanded-field {
+    margin-bottom: 10px;
+  }
+  
+  .note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+  }
+  
+  .close-btn {
+    cursor: pointer;
+    font-size: 14px;
+    color: #bbb;
+  }
+  
+  .close-btn:hover {
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .note-input {
+      padding: 8px;
+    }
+  
+    .note-form .title-input,
+    .note-header .note-input-field {
+      font-size: 14px;
+    }
+  
+    .note-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .note-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .note-header .note-input-field {
+      margin-bottom: 8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .note-input {
+      padding: 6px;
+    }
+  
+    .note-form .title-input,
+    .note-header .note-input-field {
+      font-size: 12px;
+    }
+  
+    .note-header {
+      align-items: flex-start;
+    }
+  }

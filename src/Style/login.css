@@ -1,0 +1,57 @@
+.google-logo {
+    width: 80px;  
+    margin-bottom: 10px;
+  }
+  
+  .login-box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;  
+    padding: 20px;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+    width: 320px;  
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .MuiTextField-root {
+    margin-bottom: 12px;
+  }
+  
+  .login-box .MuiLink-root {
+    text-decoration: none;
+    color: #1a73e8; 
+  }
+  
+  .login-box .MuiButton-containedPrimary {
+    text-transform: none; 
+    background-color: #1a73e8;
+  }
+  
+  .login-box .MuiButton-containedPrimary:hover {
+    background-color: #1669c1;
+  }
+  
+  @media (max-width: 768px) {
+    .login-box {
+      width: 90%;
+      margin: 20px auto;
+      padding: 15px;
+    }
+  
+    .google-logo {
+      width: 60px;
+    }
+  
+    .MuiTextField-root {
+      margin-bottom: 10px;
+    }
+  
+    .login-box .MuiButton-containedPrimary {
+      font-size: 14px;
+    }
+  }
+  

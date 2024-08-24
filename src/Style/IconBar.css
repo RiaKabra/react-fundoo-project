@@ -1,0 +1,25 @@
+.icon-baar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+  }
+  
+  .icon-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-group .MuiIconButton-root {
+    color: white;
+    padding: 6px;
+  }
+  
+  .icon-group:first-child {
+    flex-grow: 1;
+    justify-content: flex-start;
+  }
+  
+  .icon-group:last-child {
+    justify-content: flex-end;
+  }
