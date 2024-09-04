@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../Style/ColorPicker.css'; // Assuming the CSS is in the same directory
+import '../Style/ColorPicker.css'; 
 
 const colors = [
     '#F28B82', '#F28C81', '#F28D80', '#F28E7F', '#F28F7E',

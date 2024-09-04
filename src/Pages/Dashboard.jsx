@@ -1,112 +1,115 @@
-// // import React from 'react'
-// // import SideNav from '../Components/SideNav'
-// // //import '../Style/dasboard.css'
-// // import InputNote from '../Components/InputNote'
-// // export default function Dashboard() {
-// //     return (
-// //         <>
-// //             <div style={{ backgroundColor: "#202124", height: '100vh', minHeight: '100vh' }}>
-// //                 <SideNav />
-// //                 <div className="search">
-// //                     <InputNote />
-
-// //                 </div>
-// //             </div>
-
-
-// //         </>
-// //     )
-// // }
-// import React from 'react';
+// import React, { useEffect, useState } from 'react';
 // import SideNav from '../Components/SideNav';
+// import '../Style/dashboard.css';
 // import InputNote from '../Components/InputNote';
-// import { IconButton } from '@mui/material';
-// import LogoutIcon from '@mui/icons-material/Logout';
-// import { useNavigate } from 'react-router-dom';
+// import { getAll } from '../Services/noteService';
+// import SingleNote from '../Components/SingleNote';
 
 // export default function Dashboard() {
-//     const navigate = useNavigate();
+//     const [note, setNote] = useState([]);
+//     const [noteCreated, setNoteCreated] = useState(false);
+//     const [tabs, setTabs] = useState(1)
+//     const [filter,setFilter] = useState();
 
-//     const handleLogout = () => {
-//         console.log('Logout button clicked'); 
-//         localStorage.removeItem('token');
-//         navigate('/');
-
-//         const getNotes = async () => {
-//             try {
-//                 const res = await allnote();
-//                 const data1 = res?.data?.data || [];
-//                 setNote(data1);
-//             } catch (error) {
-//                 console.error("Failed to fetch notes:", error);
-//                 setNote([]); 
-//             }
+//     const getNotes = async () => {
+//         try {
+//             const res = await getAll();
+//             const data1 = res?.note || [];
+//             setNote(data1);
+//         } catch (error) {
+//             console.error("Failed to fetch notes:", error);
+//             setNote([]);
 //         }
-//         console.log(note)
-//         useEffect(() => {
-//             getNotes();
-//         }, [])
 //     };
+
+//     useEffect(() => {
+//         getNotes();
+//     }, [noteCreated]);
     
+//     const filtered = note.filter(item => {
+//         if(tabs==1 && item.isTrash === false && item.isArch ===false)
+//         {
+//             return item
+//         }
+//         else if (tabs === 4 && item.isArch ===true)
+//         {
+//             console.log(item)
+//             return item
+//         }
+//         else if (tabs===5 && item.isTrash ===true)
+//         {
+//             return item
+//         }
+//     });
+//    const tab = (value)=>{
+//     setTabs(value)
+//    }
 
 //     return (
-//         <>
-//             <div style={{ backgroundColor: "#202124", height: '100vh', minHeight: '100vh', position: 'relative' }}>
-//                 <div style={{ position: 'absolute', right: 20, top: 20 }}>
-//                     <IconButton onClick={handleLogout} color="inherit">
-//                         <LogoutIcon />
-//                     </IconButton>
-//                 </div>
-//                 <SideNav />
-//                 <div className="search">
-//                     <InputNote />
-//                 </div>
+//         <div style={{ backgroundColor: "#202124", height: '100vh', minHeight: '100vh' }}>
+//             <SideNav />
+//             <div className="search">
+//                 <InputNote setNoteCreated={setNoteCreated} />
 //             </div>
-//         </>
+//             <div className="singlenote">
+//                 <SingleNote note={note} />
+//             </div>
+//         </div>
 //     );
 // }
 
-import React, { useEffect, useState } from 'react'
-import SideNav from '../Components/SideNav'
-import '../Style/dashboard.css'
-import InputNote from '../Components/InputNote'
-import { getAll } from '../Services/noteService'
-import SingleNote from '../Components/SingleNote'
+import React, { useEffect, useState } from 'react';
+import SideNav from '../Components/SideNav';
+import '../Style/dashboard.css';
+import InputNote from '../Components/InputNote';
+import { getAll } from '../Services/noteService';
+import SingleNote from '../Components/SingleNote';
 
 export default function Dashboard() {
-
-    const [note, setNote] = useState([])
+    const [note, setNote] = useState([]);
+    const [noteCreated, setNoteCreated] = useState(false);
+    const [tabs, setTabs] = useState(1);
 
     const getNotes = async () => {
         try {
             const res = await getAll();
-            const data1 = res?.data?.data || [];
+            const data1 = res?.note || [];
             setNote(data1);
+            console.log(data1);
         } catch (error) {
             console.error("Failed to fetch notes:", error);
-            setNote([]); // Fallback to an empty array in case of an error
+            setNote([]);
         }
-    }
-    console.log(note)
+    };
+
     useEffect(() => {
         getNotes();
-    }, [])
+    }, [noteCreated, tabs]);
 
+    const filtered = note.filter(item => {
+        if (tabs === 1 && item.isTrash===false && item.isArch===false) {
+            return item;
+        } else if (tabs === 4 && item.isArch===true) {
+            return item;
+        } else if (tabs === 5 && item.isTrash===true) {
+            return item;
+        }
+        return false;
+    });
+
+    const tab = (value) => {
+        setTabs(value);
+    };
 
     return (
-
-        <>
-            <div style={{ backgroundColor: "#202124", height: '100vh', minHeight: '100vh' }} >
-                <SideNav />
-                <div className="search">
-                    <InputNote />
-                </div>
-                <div className="singlenote">
-                    <SingleNote note={note} />
-                </div>
+        <div style={{ backgroundColor: "#202124", height: '100vh', minHeight: '100vh' }}>
+            <SideNav setTabs={setTabs} />
+            <div className="search">
+                <InputNote setNoteCreated={setNoteCreated} />
             </div>
-
-
-        </>
-    )
+            <div className="singlenote">
+                <SingleNote note={filtered} />
+            </div>
+        </div>
+    );
 }

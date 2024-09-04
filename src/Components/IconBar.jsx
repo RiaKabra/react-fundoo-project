@@ -1,90 +1,112 @@
-import { useState } from 'react'
-
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
-import GroupAddIcon from '@mui/icons-material/GroupAddOutlined';
-import LightbulbIcon from '@mui/icons-material/LightbulbOutlined';
-import ImageIcon from '@mui/icons-material/ImageOutlined';
-import CalendarTodayIcon from '@mui/icons-material/CalendarTodayOutlined';
-import MoreVertIcon from '@mui/icons-material/MoreVertOutlined';
-import ArrowBackIcon from '@mui/icons-material/ArrowBackOutlined';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForwardOutlined'
-import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
-import '../Style/IconBar.css'
-import ColorPicker from '../Components/Colorpicker';
-
-export default function IconBaar() {
-
-    const [isExpanded, setIsExpanded] = useState(false);
 
 
-    const handleToggle = () => {
-        setIsExpanded(!isExpanded);
+import React, { useState } from 'react';
+import { IconButton, Tooltip, Menu, MenuItem } from '@mui/material';
+import AlarmIcon from '@mui/icons-material/Alarm';  
+import GroupIcon from '@mui/icons-material/Group'; 
+import PaletteIcon from '@mui/icons-material/Palette';  
+import ImageIcon from '@mui/icons-material/Image'; 
+import ArchiveIcon from '@mui/icons-material/Archive'; 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { toggleArchiveNote } from '../Services/noteService';
+
+export default function IconBar({ noteId, onColorChange }) {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [selectedColor, setSelectedColor] = useState('');
+    const {id} = useParams();
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
     };
 
-    return (
-        <>
-            <div className="icon-baar">
-                <div className="icon-group">
-                    <Tooltip title="Notifications" arrow>
-                        <IconButton>
-                            <NotificationsIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Add Group" arrow>
-                        <IconButton>
-                            <GroupAddIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Colors" arrow>
-                        <IconButton>
-                            <ColorLensOutlinedIcon onClick={handleToggle} />
-                            {/* {isExpanded && (
-                                <div className="color-picker-container">
-                                    <ColorPicker onColorChange={handleColorChange} />
-                                </div>)} */}
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Ideas" arrow>
-                        <IconButton>
-                            <LightbulbIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Insert Image" arrow>
-                        <IconButton>
-                            <ImageIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Calendar" arrow>
-                        <IconButton>
-                            <CalendarTodayIcon />
-                        </IconButton>
-                    </Tooltip>
-                </div>
-                <div className="icon-group">
-                    <Tooltip title="More Options" arrow>
-                        <IconButton>
-                            <MoreVertIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Undo" arrow>
-                        <IconButton>
-                            <ArrowBackIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Redo" arrow>
-                        <IconButton>
-                            <ArrowForwardIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <br />
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
+    const handleColorChange = async (color) => {
+        setSelectedColor(color);
+        handleClose();
 
-                </div>
-
+        try {
+            const response = await axios.patch(`http://localhost:3000/api/v1/notes/colour/${noteId}`, {
+                color: color,
+            });
+            if (response.status === 200) {
+                onColorChange(color);
+            }
+        } catch (error) {
+            console.error('Error updating note color:', error);
+        }
+        return (
+            <div className="icon-bar">
+                <button onClick={() => handleColorChange('blue')}>Blue</button>
+                <button onClick={() => handleColorChange('red')}>Red</button>
+                <button onClick={() => handleColorChange('white')}>White</button>
+                <button onClick={() => handleColorChange('black')}>Black</button>
+                <button onClick={() => handleColorChange('yellow')}>Yellow</button>
+                <button onClick={() => handleColorChange('orange')}>Orange</button>
             </div>
-
-        </>
-    )
+        );
+    };
+    const archive = async () => {
+        if (id) {
+            console.log(id);
+            try {
+                const res = await  toggleArchiveNote(id);
+                console.log('Note archived:', res);
+            } catch (error) {
+                console.error('Failed to archive note:', error);
+            }
+        } else {
+            console.error('No id found in params');
+        }
+    };
+    return (
+        <div className="icon-bar">
+            <div className="icon-group">
+                <Tooltip title="Remind me" arrow>
+                    <IconButton>
+                        <AlarmIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Collaborator" arrow>
+                    <IconButton>
+                        <GroupIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Background options" arrow>
+                    <IconButton onClick={handleClick}>
+                        <PaletteIcon />
+                    </IconButton>
+                </Tooltip>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'background-options-button',
+                    }}
+                >
+                    <MenuItem onClick={() => handleColorChange('blue')}>Blue</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('red')}>Red</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('white')}>White</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('black')}>Black</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('yellow')}>Yellow</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('orange')}>Orange</MenuItem>
+                </Menu>
+                <Tooltip title="Add image" arrow>
+                    <IconButton>
+                        <ImageIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Archive" arrow>
+                    <IconButton onClick={archive}>
+                        <ArchiveIcon />
+                    </IconButton>
+                </Tooltip>
+            </div>
+        </div>
+    );
 }

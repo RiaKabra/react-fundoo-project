@@ -1,10 +1,9 @@
 import {React,useState} from 'react';
-import { TextField, Button, Typography, Link, Box, Alert, alertClasses } from '@mui/material';
-import { Navigate, useNavigate } from 'react-router-dom'; 
+import { TextField, Button, Typography, Box, Alert, alertClasses } from '@mui/material';
+import { useNavigate, Link } from 'react-router-dom'; 
 import '../Style/login.css';
 import { login } from '../Services/userService';
 import googleLogo from '../Assests/google-logo.png';  
-
 
 function Login() {
         const [formData, setFormData] = useState({
@@ -71,11 +70,16 @@ const send = async()=>{
             </Box>
 
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Link
-                    linkto="/signup"
+                {/* <Link
+                    to="/signup"
                     variant="body2"
                 >
                     Create account
+                </Link> */}
+                <Link to='/signup'>
+                            <Button variant="text" color="primary" fullWidth>
+                                Create account
+                            </Button>
                 </Link>
 
                 <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>

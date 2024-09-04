@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
 import '../Style/search.css'
 import IconBar from './IconBar';
-
 import { createNote } from '../Services/noteService';
 
-
-
-export default function InputNote() {
+export default function InputNote({setNoteCreated}) {
     const [isExpanded, setIsExpanded] = useState(false);
 
 
     const [data, setData] = useState({
         title: "",
         description: "",
-        // color: ""
     })
 
     const handleOpen = () => {
@@ -27,6 +23,8 @@ export default function InputNote() {
             if (data.title !== "" || data.description !== "") {
                 const res = await createNote(data);
                 console.log(res);
+                setNoteCreated(true)
+                setData({title:"",description:""});
             }
         } catch (error) {
             console.error("Error creating note:", error);
@@ -44,7 +42,6 @@ export default function InputNote() {
         }
 
     };
-
 
 
     return (
