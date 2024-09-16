@@ -70,12 +70,7 @@ const send = async()=>{
             </Box>
 
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                {/* <Link
-                    to="/signup"
-                    variant="body2"
-                >
-                    Create account
-                </Link> */}
+                {}
                 <Link to='/signup'>
                             <Button variant="text" color="primary" fullWidth>
                                 Create account

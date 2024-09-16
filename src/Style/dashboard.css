@@ -1,21 +1,97 @@
-/*.search {
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(248, 248, 245);
-    width: 25vw;
-    margin-left: 37vw;
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #202124;
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+ 
+}
+
+.search {
+  margin-top: 5vw;
+  margin-left: 240px;
+  padding: 20px;
+  background-color: #202124;
+}
+
+.singlenote {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  gap: 20px; 
+  padding: 20px;
+  margin-left: 70px;
+  
+}
+
+@media (max-width: 1024px) {
+  .search,
+  .singlenote {
+    margin-left: 0;
+    padding: 15px;
   }
-*/
-  .search {
-    margin-top: 100px;
-    display: flex;
+
+  .singlenote {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
     justify-content: center;
-    align-items: center;
-    background-color: rgb(248, 248, 245);
-    width: 50vw; /* Adjust as necessary */
-    margin-left: auto; /* Align to the right */
-    margin-right: auto; /* Center horizontally */
-    position: relative; /* Ensure proper stacking context */
+  }
+}
+
+
+@media (max-width: 768px) {
+  .search,
+  .singlenote {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .search {
+    margin-top: 15vw;
+    margin-left: 7vw;
+  }
+  .singlenote {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+    justify-content: center;
+    padding: 10px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .search,
+  .singlenote {
+    margin-left: 0;
+    margin-top: 5vw;
+    padding: 5px;
+  }
+  .search {
+    margin-top: 30vw;
+    margin-left: 7vw;
+  }
+  .singlenote {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
+    justify-content: center;
+    padding: 5px;
+  }
+}
+.notes-container {
+  padding: 20px;
+}
+
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.list-view {
+  display: block; 
+}
+
+.singlenote {
+  background-color: #333; 
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px; 
 }
