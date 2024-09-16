@@ -105,7 +105,7 @@ export default function Header() {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={logout}>Logout</MenuItem>
-            {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
+            {}
         </Menu>
     );
 
