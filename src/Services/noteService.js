@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = "http://localhost:3000/api/v1/notes";
+const baseUrl = "http://localhost:3000/api/v1/notes/";
 const token = localStorage.getItem('token');
 const headers = { 'Authorization': 'bearer ' + token };
 
