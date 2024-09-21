@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import IconBar from './IconBar';
 import '../Style/SingleNote.css';
-import { toggleArchiveNote, toggleTrashNote } from '../Services/noteService';
+import { toggleArchiveNote, toggleTrashNote} from '../Services/noteService';
 import { NavLink } from 'react-router-dom';
+import Edit from './Edit';
 
-export default function SingleNote({ note, setNoteCreated, isGrid }) {
+export default function SingleNote({ noteCreated,note, setNoteCreated, isGrid }) {
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [notes, setNotes] = useState(note);
 
@@ -24,7 +25,7 @@ export default function SingleNote({ note, setNoteCreated, isGrid }) {
         } catch (error) {
         }
     };
-
+    
     const handleToggleTrash = async (noteId, currentStatus) => {
         try {
             await toggleTrashNote(noteId, !currentStatus);
@@ -38,20 +39,21 @@ export default function SingleNote({ note, setNoteCreated, isGrid }) {
         <div className={isGrid ? 'grid-view' : 'card-container-list'}>
             {note.map((ele, index) => (
                 <NavLink
-                    to={`/dashboard/note/${ele._id}`}
+                    to={`/dashboard/notes/${ele._id}`}
                     key={ele._id}
                     style={{ textDecoration: 'none' }}
                 >
                     <div
                         key={index}
-                        style={{ backgroundColor: ele.color }}
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
+                        className='heading'
+                        style = {{backgroundColor:`${ele.colour}`}}
                     >
                         <h2>{ele.title}</h2>
                         <p>{ele.description}</p>
-                        {hoveredIndex === index && (
-                            <div className="footer">
+                        {hoveredIndex === ele._id && (
+                            <div className="footer" >
                                 <IconBar
                                     noteId={ele._id}
                                     isArchived={ele.isArch}
@@ -60,15 +62,16 @@ export default function SingleNote({ note, setNoteCreated, isGrid }) {
                                     onToggleTrash={() => handleToggleTrash(ele._id, ele.isTrash)}
                                     setNoteCreated={setNoteCreated}
                                     handleClose={() => setHoveredIndex(null)}
+                                    style={{color:'white'}}
+                                    
                                 />
-                                <span className="close-btn" onClick={() => setHoveredIndex(null)}>
-                                    Close
-                                </span>
+                               
                             </div>
                         )}
                     </div>
                 </NavLink>
-            ))}
+          ))}
+         
         </div>
     );
 }

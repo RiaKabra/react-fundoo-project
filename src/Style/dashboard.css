@@ -18,8 +18,8 @@
 .singlenote {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-  gap: 20px; 
-  padding: 20px;
+  gap: 100px; 
+  padding: 50px;
   margin-left: 70px;
   
 }
@@ -42,7 +42,7 @@
   .search,
   .singlenote {
     margin-left: 0;
-    padding: 10px;
+    padding: 50px;
   }
 
   .search {
@@ -52,7 +52,7 @@
   .singlenote {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
     justify-content: center;
-    padding: 10px;
+    padding: 50px;
   }
 }
 
@@ -62,7 +62,7 @@
   .singlenote {
     margin-left: 0;
     margin-top: 5vw;
-    padding: 5px;
+    padding: 50px;
   }
   .search {
     margin-top: 30vw;
@@ -75,13 +75,13 @@
   }
 }
 .notes-container {
-  padding: 20px;
+  padding: 100px;
 }
 
 .grid-view {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  gap: 1000px;
 }
 
 .list-view {
@@ -91,7 +91,7 @@
 .singlenote {
   background-color: #333; 
   color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 10px; 
+  padding: 50px;
+  border-radius: 50px;
+  margin-bottom: 50px; 
 }

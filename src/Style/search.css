@@ -51,6 +51,7 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 10px;
+    color:white;
   }
   
   .close-btn {
@@ -94,6 +95,7 @@
     .note-footer {
       flex-direction: column;
       align-items: flex-start;
+      color:white;
     }
   
     .note-header .note-input-field {

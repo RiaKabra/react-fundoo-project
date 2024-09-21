@@ -9,8 +9,12 @@
   align-items: center;
   justify-content: center;
   border-radius: 0 0 8px 8px;
+  color:white;
 }
 
+.css-i4bv87-MuiSvgIcon-root{
+fill:#ffffff;
+}
 
 .icon-group {
   display: flex;
@@ -19,15 +23,17 @@
   flex-wrap: wrap;
   width: 100%;
   max-width: 800px; 
+  color:white;
 }
-
 
 .icon-group .MuiIconButton-root {
   padding: 10px;
   color: #ffffff; 
 }
 
-
+.element-style{
+  color:white;
+}
 .close-btn {
   color: #ffffff; 
   margin-left: auto;
@@ -41,7 +47,6 @@
 .close-btn:hover {
   background-color: #444; 
 }
-
 
 .color-picker-container {
   position: absolute;
@@ -79,4 +84,12 @@
     font-size: 12px;
     padding: 0 5px;
   }
+}
+
+.icon-group .MuiIconButton-root {
+  color: white !important; /* Enforce white icons */
+}
+
+.icon-group .MuiSvgIcon-root {
+  fill: white !important; /* Ensure SVGs are filled white */
 }

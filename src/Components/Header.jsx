@@ -16,6 +16,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import google from '../Assests/googlekeep.png';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import ViewStreamOutlinedIcon from '@mui/icons-material/ViewStreamOutlined';
 import { useNavigate } from 'react-router-dom'; 
 
 const Search = styled('div')(({ theme }) => ({
@@ -57,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function Header() {
+export default function Header({handleView}) {
     const navigate = useNavigate(); 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -80,6 +82,12 @@ export default function Header() {
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
+    };
+    const [grid,setGrid]=React.useState(true);
+
+    const handleToggleView = () => {
+        setGrid(!grid);
+        handleView(!grid);
     };
 
     const logout = () => {
@@ -160,6 +168,7 @@ export default function Header() {
             </MenuItem>
         </Menu>
     );
+    
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -203,10 +212,11 @@ export default function Header() {
                             size="large"
                             aria-label="show 17 new notifications"
                             color="inherit"
+                            onClick={handleToggleView}
                         >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
-                            </Badge>
+                        
+                                {grid === true ? <GridViewOutlinedIcon /> : <ViewStreamOutlinedIcon />}
+                            
                         </IconButton>
                         <IconButton
                             size="large"

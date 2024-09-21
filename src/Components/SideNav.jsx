@@ -87,7 +87,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export default function SideNav({ setTabs }) {
+export default function SideNav({ setTabs,handleToggleView }) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -98,7 +98,9 @@ export default function SideNav({ setTabs }) {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-
+    const handleView = (value) =>{
+        handleToggleView(value);
+    }
     const icon = [
         <LightbulbOutlinedIcon />,
         <Notifications />,
@@ -132,7 +134,7 @@ export default function SideNav({ setTabs }) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        <Header />
+                        <Header handleView={handleView}/>
                     </Typography>
                 </Toolbar>
             </AppBar>
