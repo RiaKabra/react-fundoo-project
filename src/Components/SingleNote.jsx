@@ -3,12 +3,11 @@ import IconBar from './IconBar';
 import '../Style/SingleNote.css';
 import { toggleArchiveNote, toggleTrashNote} from '../Services/noteService';
 import { NavLink } from 'react-router-dom';
-import Edit from './Edit';
 
 export default function SingleNote({ noteCreated,note, setNoteCreated, isGrid }) {
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [notes, setNotes] = useState(note);
-
+    
     const handleMouseEnter = (index) => {
         setHoveredIndex(index);
     };
@@ -52,7 +51,7 @@ export default function SingleNote({ noteCreated,note, setNoteCreated, isGrid })
                     >
                         <h2>{ele.title}</h2>
                         <p>{ele.description}</p>
-                        {hoveredIndex === ele._id && (
+                        {hoveredIndex === index && (
                             <div className="footer" >
                                 <IconBar
                                     noteId={ele._id}
@@ -69,9 +68,10 @@ export default function SingleNote({ noteCreated,note, setNoteCreated, isGrid })
                             </div>
                         )}
                     </div>
-                </NavLink>
+               
+                </NavLink >
           ))}
-         
+        
         </div>
     );
 }
