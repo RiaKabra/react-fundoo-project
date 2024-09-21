@@ -42,8 +42,9 @@ export default function IconBar({ noteId, input, onColorChange, isArchived, isTr
     const handleArchiveToggle = async () => {
         if (id) {
             try {
-                await toggleArchiveNote(id);
+                const response = await toggleArchiveNote(id);
                 setNoteCreated(true);
+                console.log('Archive toggle response:', response);
             } catch (error) {
                 console.error('Failed to toggle archive:', error);
             }
@@ -53,8 +54,9 @@ export default function IconBar({ noteId, input, onColorChange, isArchived, isTr
     const handleTrashToggle = async () => {
         if (id) {
             try {
-                await toggleTrashNote(id);
+                const response = await toggleTrashNote(id);
                 setNoteCreated(true);
+                console.log('Trash toggle response:', response);
             } catch (error) {
                 console.error('Failed to toggle trash:', error);
             }
@@ -64,8 +66,9 @@ export default function IconBar({ noteId, input, onColorChange, isArchived, isTr
     const handleDelete = async () => {
         if (id) {
             try {
-                await deleteForever(id);
+                const response = await deleteForever(id);
                 setNoteCreated(true);
+                console.log('Delete forever response:', response);
             } catch (error) {
                 console.error('Failed to delete forever:', error);
             }
@@ -108,10 +111,16 @@ export default function IconBar({ noteId, input, onColorChange, isArchived, isTr
                         anchorEl={anchorEl}
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'background-options-button',
+                        }}
                     >
-                        {['blue', 'red', 'white', 'black', 'yellow', 'orange'].map(color => (
-                            <MenuItem key={color} onClick={() => handleColorChange(color)}>{color.charAt(0).toUpperCase() + color.slice(1)}</MenuItem>
-                        ))}
+                        <MenuItem onClick={() => handleColorChange('blue')}>Blue</MenuItem>
+                        <MenuItem onClick={() => handleColorChange('red')}>Red</MenuItem>
+                        <MenuItem onClick={() => handleColorChange('white')}>White</MenuItem>
+                        <MenuItem onClick={() => handleColorChange('black')}>Black</MenuItem>
+                        <MenuItem onClick={() => handleColorChange('yellow')}>Yellow</MenuItem>
+                        <MenuItem onClick={() => handleColorChange('orange')}>Orange</MenuItem>
                     </Menu>
                     <Tooltip title="Archive" arrow>
                         <IconButton onClick={handleArchiveToggle}>
@@ -145,6 +154,21 @@ export default function IconBar({ noteId, input, onColorChange, isArchived, isTr
                     <PaletteIcon />
                 </IconButton>
             </Tooltip>
+            <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'background-options-button',
+                }}
+            >
+                <MenuItem onClick={() => handleColorChange('blue')}>Blue</MenuItem>
+                <MenuItem onClick={() => handleColorChange('red')}>Red</MenuItem>
+                <MenuItem onClick={() => handleColorChange('white')}>White</MenuItem>
+                <MenuItem onClick={() => handleColorChange('black')}>Black</MenuItem>
+                <MenuItem onClick={() => handleColorChange('yellow')}>Yellow</MenuItem>
+                <MenuItem onClick={() => handleColorChange('orange')}>Orange</MenuItem>
+            </Menu>
             <Tooltip title="Add image" arrow>
                 <IconButton>
                     <ImageIcon />
@@ -171,3 +195,4 @@ export default function IconBar({ noteId, input, onColorChange, isArchived, isTr
         </div>
     );
 }
+
