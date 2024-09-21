@@ -5,7 +5,7 @@ import { createNote ,retrieveNote,updateNote} from '../Services/noteService';
 import { useParams } from 'react-router-dom';
 
 
-export default function InputNote({editn, close, noteCreated,setNoteCreated}) {
+export default function InputNote({noteCreated,setNoteCreated}) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [colour,setColour] = useState();
     const [input,setInput] = useState(true);
@@ -68,7 +68,7 @@ export default function InputNote({editn, close, noteCreated,setNoteCreated}) {
     return (
         <>
             <div className={`note-input ${isExpanded ? 'expanded' : ''}` } style={{backgroundColor:colour}}>
-            {(isExpanded || edit === true) && (
+            {(isExpanded) && (
                     <div className="note-form" >
                         <input
                             type="text"
@@ -97,9 +97,9 @@ export default function InputNote({editn, close, noteCreated,setNoteCreated}) {
 
                     />
                 </div>
-                {(isExpanded || edit === true) && (
+                {(isExpanded)&& (
                     <div className="note-footer" >
-                        <IconBar  input={input} handleCol={handleColour} />
+                        <IconBar  input={input} handleColour={handleColour} />
                         <span className="close-btn" onClick={handleToggle}>Close</span>
                     </div>
                 )}
