@@ -9,26 +9,12 @@ export default function InputNote({editn, close, noteCreated,setNoteCreated}) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [colour,setColour] = useState();
     const [input,setInput] = useState(true);
-    const[edit,setEdit]=useState(false || editn);
     const {id}=useParams();
     const [data, setData] = useState({
         title: "",
         description: "",
         colour:colour
     })
-    const [edata, setEData] = useState({
-        title: "",
-        description: "",
-        colour: colour
-    });
-    useEffect(() => {
-        const fetchNote = async () => {
-            const res = await retrieveNote(id);
-            setEData(res?.data?.note);
-            console.log(res?.data?.note)
-        }
-        fetchNote();
-    }, [id]);
     
    
 
@@ -59,22 +45,9 @@ export default function InputNote({editn, close, noteCreated,setNoteCreated}) {
 
             colour: value
         }));
-        setEData(prevDetails => ({
-            ...prevDetails,
-
-            colour: value
-        }));
     }
 
     const handleToggle = async () => {
-        if (edit === true) {
-            console.log(id);
-            console.log(edata);
-            const res = await updateNote(id, edata);
-            console.log(res);
-            setNoteCreated(true);
-            close()
-        } else {
             if (data.title === "" && data.description === "") {
                 setIsExpanded(false);
                 setColour("")
@@ -89,7 +62,7 @@ export default function InputNote({editn, close, noteCreated,setNoteCreated}) {
                 setColour("")
             }
         }
-    };
+    
 
 
     return (
@@ -102,11 +75,9 @@ export default function InputNote({editn, close, noteCreated,setNoteCreated}) {
                             placeholder="Title"
                             className="title-input"
                             name="title"
-                            value={edit === true ? edata.title : data.title}
+                            value={ data.title}
                             onChange={(e) =>
-                                edit === true
-                                    ? setEData({ ...edata, [e.target.name]: e.target.value })
-                                    : setData({ ...data, [e.target.name]: e.target.value })
+                                     setData({ ...data, [e.target.name]: e.target.value })
                             }
 
                         />
@@ -119,11 +90,9 @@ export default function InputNote({editn, close, noteCreated,setNoteCreated}) {
                         placeholder="Take a note..."
                         className={`note-input-field ${isExpanded ? 'expanded-field' : ''}`} 
                         name="description"
-                        value={edit === true ? edata.description : data.description}
+                        value={ data.description}
                         onChange={(e) =>
-                            edit === true
-                                ? setEData({ ...edata, [e.target.name]: e.target.value })
-                                : setData({ ...data, [e.target.name]: e.target.value })
+                                setData({ ...data, [e.target.name]: e.target.value })
                         }
 
                     />
