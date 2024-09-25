@@ -9,9 +9,8 @@ import UnarchiveIcon from '@mui/icons-material/Unarchive';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import RestoreFromTrashIcon from '@mui/icons-material/RestoreFromTrash';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { toggleArchiveNote, toggleTrashNote, deleteForever, updateNoteColor } from '../Services/noteService';
+import { useParams } from 'react-router-dom';
 
 export default function IconBar({ noteId, input, onColorChange, isArchived, isTrashed, setNoteCreated, handleColour }) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -75,124 +74,87 @@ export default function IconBar({ noteId, input, onColorChange, isArchived, isTr
         }
     };
 
-    const renderIcon = () => {
-        if (isTrashed) {
-            return (
-                <>
-                    <Tooltip title="Restore" arrow>
-                        <IconButton onClick={handleTrashToggle}>
-                            <RestoreFromTrashIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete Forever" arrow>
-                        <IconButton onClick={handleDelete}>
-                            <DeleteForeverIcon />
-                        </IconButton>
-                    </Tooltip>
-                </>
-            );
-        } else if (isArchived) {
-            return (
-                <Tooltip title="Unarchive" arrow>
-                    <IconButton onClick={handleArchiveToggle}>
-                        <UnarchiveIcon />
+    const renderIcons = () => {
+        return (
+            <>
+                <Tooltip title="Remind me" arrow>
+                    <IconButton style={{ color: 'white' }}>
+                        <AlarmIcon />
                     </IconButton>
                 </Tooltip>
-            );
-        } else {
-            return (
-                <>
-                    <Tooltip title="Background options" arrow>
-                        <IconButton onClick={handleClick}>
-                            <PaletteIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Menu
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'background-options-button',
-                        }}
-                    >
-                        <MenuItem onClick={() => handleColorChange('blue')}>Blue</MenuItem>
-                        <MenuItem onClick={() => handleColorChange('red')}>Red</MenuItem>
-                        <MenuItem onClick={() => handleColorChange('white')}>White</MenuItem>
-                        <MenuItem onClick={() => handleColorChange('black')}>Black</MenuItem>
-                        <MenuItem onClick={() => handleColorChange('yellow')}>Yellow</MenuItem>
-                        <MenuItem onClick={() => handleColorChange('orange')}>Orange</MenuItem>
-                    </Menu>
-                    <Tooltip title="Archive" arrow>
-                        <IconButton onClick={handleArchiveToggle}>
-                            <ArchiveIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Trash" arrow>
-                        <IconButton onClick={handleTrashToggle}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Tooltip>
-                </>
-            );
-        }
-    };
+                <Tooltip title="Collaborator" arrow>
+                    <IconButton style={{ color: 'white' }}>
+                        <GroupIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Background options" arrow>
+                    <IconButton onClick={handleClick} style={{ color: 'white' }}>
+                        <PaletteIcon />
+                    </IconButton>
+                </Tooltip>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'background-options-button',
+                    }}
+                >
+                    <MenuItem onClick={() => handleColorChange('blue')}>Blue</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('red')}>Red</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('white')}>White</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('black')}>Black</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('yellow')}>Yellow</MenuItem>
+                    <MenuItem onClick={() => handleColorChange('orange')}>Orange</MenuItem>
+                </Menu>
+                <Tooltip title="Add image" arrow>
+                    <IconButton style={{ color: 'white' }}>
+                        <ImageIcon />
+                    </IconButton>
+                </Tooltip>
 
-    const renderFullIconBar = () => (
-        <>
-            <Tooltip title="Remind me" arrow>
-                <IconButton>
-                    <AlarmIcon />
-                </IconButton>
-            </Tooltip>
-            <Tooltip title="Collaborator" arrow>
-                <IconButton>
-                    <GroupIcon />
-                </IconButton>
-            </Tooltip>
-            <Tooltip title="Background options" arrow>
-                <IconButton onClick={handleClick}>
-                    <PaletteIcon />
-                </IconButton>
-            </Tooltip>
-            <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'background-options-button',
-                }}
-            >
-                <MenuItem onClick={() => handleColorChange('blue')}>Blue</MenuItem>
-                <MenuItem onClick={() => handleColorChange('red')}>Red</MenuItem>
-                <MenuItem onClick={() => handleColorChange('white')}>White</MenuItem>
-                <MenuItem onClick={() => handleColorChange('black')}>Black</MenuItem>
-                <MenuItem onClick={() => handleColorChange('yellow')}>Yellow</MenuItem>
-                <MenuItem onClick={() => handleColorChange('orange')}>Orange</MenuItem>
-            </Menu>
-            <Tooltip title="Add image" arrow>
-                <IconButton>
-                    <ImageIcon />
-                </IconButton>
-            </Tooltip>
-            <Tooltip title="Archive" arrow>
-                <IconButton onClick={handleArchiveToggle}>
-                    <ArchiveIcon />
-                </IconButton>
-            </Tooltip>
-            <Tooltip title="Trash" arrow>
-                <IconButton onClick={handleTrashToggle}>
-                    <DeleteIcon />
-                </IconButton>
-            </Tooltip>
-        </>
-    );
+                {isTrashed ? (
+                    <>
+                        <Tooltip title="Restore" arrow>
+                            <IconButton onClick={handleTrashToggle} style={{ color: 'white' }}>
+                                <RestoreFromTrashIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete Forever" arrow>
+                            <IconButton onClick={handleDelete} style={{ color: 'white' }}>
+                                <DeleteForeverIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </>
+                ) : isArchived ? (
+                    <Tooltip title="Unarchive" arrow>
+                        <IconButton onClick={handleArchiveToggle} style={{ color: 'white' }}>
+                            <UnarchiveIcon />
+                        </IconButton>
+                    </Tooltip>
+                ) : (
+                    <>
+                        <Tooltip title="Archive" arrow>
+                            <IconButton onClick={handleArchiveToggle} style={{ color: 'white' }}>
+                                <ArchiveIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Trash" arrow>
+                            <IconButton onClick={handleTrashToggle} style={{ color: 'white' }}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </>
+                )}
+            </>
+        );
+    };
 
     return (
         <div className="icon-bar">
             <div className="icon-group">
-                {input ? renderFullIconBar() : renderIcon()}
+                {renderIcons()}
             </div>
         </div>
     );
 }
-
