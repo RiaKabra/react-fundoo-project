@@ -18,7 +18,8 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import google from '../Assests/googlekeep.png';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import ViewStreamOutlinedIcon from '@mui/icons-material/ViewStreamOutlined';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { TextField } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -59,10 +60,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function Header({handleView}) {
+export default function Header(props) {
+    const {handleView, handleSearch , setSearchTerm, searchTerm, function_1} = props;
     const navigate = useNavigate(); 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    // const [searchTerm, setSearchTerm] = React.useState(''); 
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -83,7 +86,8 @@ export default function Header({handleView}) {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
-    const [grid,setGrid]=React.useState(true);
+
+    const [grid, setGrid] = React.useState(true);
 
     const handleToggleView = () => {
         setGrid(!grid);
@@ -94,6 +98,21 @@ export default function Header({handleView}) {
         localStorage.removeItem('token'); 
         navigate('/');
     };
+
+    const handleSearchChange = (event) => {
+        console.log(event);
+        //setSearchTerm(event.target.value); 
+        let value = event;    
+        // handleSearch(value);
+    };
+
+    const handleSearchSubmit = () => {
+        // handleSearch(searchTerm); 
+        function_1();
+    };
+  
+
+    
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -113,7 +132,6 @@ export default function Header({handleView}) {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={logout}>Logout</MenuItem>
-            {}
         </Menu>
     );
 
@@ -168,7 +186,6 @@ export default function Header({handleView}) {
             </MenuItem>
         </Menu>
     );
-    
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -196,11 +213,22 @@ export default function Header({handleView}) {
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
-                        <StyledInputBase
+                        <TextField
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
+                            value={searchTerm} 
+                            onChange={(e)=> handleSearchChange(e.target.value)} 
+                            
+
+
+                            // onKeyPress={(e) => {
+                            //     if (e.key === 'Enter') handleSearchSubmit();
+                            // }}
+                            // onChange={()=>function_1()}
+
                         />
                     </Search>
+                    <SearchIcon onClick={handleSearchSubmit} />
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }} >
                         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -214,9 +242,7 @@ export default function Header({handleView}) {
                             color="inherit"
                             onClick={handleToggleView}
                         >
-                        
-                                {grid === true ? <GridViewOutlinedIcon /> : <ViewStreamOutlinedIcon />}
-                            
+                            {grid === true ? <GridViewOutlinedIcon /> : <ViewStreamOutlinedIcon />}
                         </IconButton>
                         <IconButton
                             size="large"
