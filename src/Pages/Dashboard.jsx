@@ -6,21 +6,42 @@ import { getAll } from '../Services/noteService';
 import SingleNote from '../Components/SingleNote';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ListViewIcon from '@mui/icons-material/ViewList';
+import Header from '../Components/Header';
+
 export default function Dashboard() {
     const [note, setNote] = useState([]);
     const [noteCreated, setNoteCreated] = useState(false);
     const [tabs, setTabs] = useState(1);
     const [isGrid, setIsGrid] = useState(true);
+    const [searchTerm, setSearchTerm] = React.useState(''); 
+
+
     const handleToggleView = (value) => {
-      setIsGrid(value);
+        setIsGrid(value);
     };
 
+    const handleSearch = (query) => {
+        console.log(query);
+        const filteredNotes = note.filter(note =>
+            note.title.toLowerCase().includes(query.toLowerCase()) ||
+            note.description.toLowerCase().includes(query.toLowerCase())
+        );
+
+        setNote(filteredNotes);
+        // setDisplayedNotes(filteredNotes);
+    };
+    
     const getNotes = async () => {
         try {
             const res = await getAll();
-            const data1 = res?.note || [];
-            setNote(data1);
+            console.log("Notes fetched:", res); 
+            if (res.note) {
+                setNote(res.note); 
+            } else {
+                setNote([]);
+            }
         } catch (error) {
+            console.error("Error fetching notes:", error);
             setNote([]);
         }
     };
@@ -28,43 +49,52 @@ export default function Dashboard() {
     useEffect(() => {
         getNotes();
     }, [noteCreated, tabs]);
+    useEffect(()=>{
+       handleSearch(searchTerm);
+    },[searchTerm]);
     
     const filtered = note.filter(item => {
-        if (tabs === 1 && item.isTrash === false && item.isArch === false) {
-            return item;
-        } else if (tabs === 4 && item.isArch === true) {
-            return item;
-        } else if (tabs === 5 && item.isTrash === true) {
-            return item;
-        }
-    });
+      if (tabs === 1 && !item.isTrash && !item.isArch) {
+          return true;
+      } else if (tabs === 4 && item.isArch) {
+          return true;
+      } else if (tabs === 5 && item.isTrash) {
+          return true;
+      }
+      return false;
+  });
+  
 
-    // const toggleView = () => {
-    //     setIsGrid(!isGrid);
-    // };
-
+    console.log("Filtered notes:", filtered);
+    
+    const function_1 = ()=>
+    {
+       console.log("message is called--------->");
+    }
     return (
         <div style={{ backgroundColor: "#202124", height: '100vh', minHeight: '100vh' }}>
-          <SideNav setTabs={setTabs} handleToggleView={handleToggleView}/>
-          <div className="search">
-            <InputNote setNoteCreated={setNoteCreated} noteCreated ={noteCreated} />
-          </div>
-          <div className="view-toggle">
-          
-              {/* {isGrid ? 'Switch to List View' : 'Switch to Grid View'} */}
-         
-            {/* // <IconButton onClick={handleToggleView} aria-label="Toggle View" style={{ color: 'white' }}>
-            //             {isGrid ? <ListViewIcon /> : <GridViewIcon />}
-            //         </IconButton> */}
-          </div>
-          <div className="search">
-            <SingleNote 
-              note={filtered} 
-              setNoteCreated={setNoteCreated} 
-              noteCreated={noteCreated}
-              isGrid={isGrid} 
-            />
-          </div>
+            <Header handleView={handleToggleView} handleSearch={handleSearch} setSearchTerm={setSearchTerm} searchTerm={searchTerm} function_1={function_1} />
+            
+            <SideNav setTabs={setTabs} handleToggleView={handleToggleView} />
+            
+            <div className="search">
+                <InputNote setNoteCreated={setNoteCreated} noteCreated={noteCreated} />
+            </div>
+            <div className="view-toggle">
+                {/* Optional toggle view logic */}
+            </div>
+            <div className="search">
+                {filtered.length > 0 ? (
+                    <SingleNote 
+                        note={filtered} 
+                        setNoteCreated={setNoteCreated} 
+                        noteCreated={noteCreated}
+                        isGrid={isGrid} 
+                    />
+                ) : (
+                    <p>No notes available</p> 
+                )}
+            </div>
         </div>
     );
 }

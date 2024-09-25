@@ -14,10 +14,10 @@
   background-color: #333;  
   color: white;
   padding: 100px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   min-width: 200px;
-  max-width: 300px;
+  max-width: 400px;
   align-items: center;
   /*word-wrap: break-word; */
 }
@@ -45,10 +45,17 @@
 
 .footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* Align items in one row, starting from the left */
   align-items: center;
-  padding-top: 10px;
+  padding-right: 10px;
 }
+
+.footer .icon-group {
+  display: flex;
+  align-items: center; 
+  padding-right: 10px; 
+}
+
 
 .close-btn {
   cursor: pointer;

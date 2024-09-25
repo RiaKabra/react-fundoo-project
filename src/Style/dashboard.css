@@ -86,6 +86,7 @@
 
 .list-view {
   display: block; 
+  width:100px;
 }
 
 .singlenote {

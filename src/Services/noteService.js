@@ -1,11 +1,13 @@
 import axios from 'axios';
-const baseUrl = "http://localhost:3000/api/v1/notes/";
+const baseUrl = "http://localhost:3000/api/v1/notes";
 const token = localStorage.getItem('token');
 const headers = { 'Authorization': 'bearer ' + token };
 
 export const getAll = async () => {
     try {
+        console.log('Token:', token);
         const res = await axios.get(baseUrl, { headers });
+        console.log("API Response:", res);
         console.log(res.data);
         return res.data;
     } catch (error) {
@@ -42,6 +44,7 @@ export const createNote = async (data) => {
         console.error("Error creating note:", error);
     }
 };
+
 
 export const toggleArchiveNote = async (id) => {
     try {
@@ -84,6 +87,7 @@ export const deleteForever = async (id, created) => {
 };
 
 export const updateNote = async(id,data)=>{
+
     if (!id) {
         console.log("id not found=====>");
         return null;
@@ -94,11 +98,12 @@ export const updateNote = async(id,data)=>{
         return null;
     }
 
-    if (id && data) {
+    if (id && data && id!==undefined) {
+        let noteData=data.data;
 
-
-        const url = `${baseUrl}/${id}`;
-        const res = await axios.put(url,{ data}, {headers});
+        const url = `http://localhost:3000/api/v1/notes/${id}`;
+        console.log(data);
+        const res = await axios.put(url,data, {headers});
         return res;
 
     } else {
@@ -107,7 +112,12 @@ export const updateNote = async(id,data)=>{
 }
 
 export const retrieveNote = async(id)=>{
-    const url = `${baseUrl}/${id}`;
-    const res = await axios.get(url, {headers});
+    let res;
+    if(id!==undefined)
+    {
+    const url = `http://localhost:3000/api/v1/notes/${id}`;
+    console.log(url);
+    res = await axios.get(url, {headers});
+    }
     return res;
 }
