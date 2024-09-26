@@ -13,7 +13,8 @@ export default function Dashboard() {
     const [noteCreated, setNoteCreated] = useState(false);
     const [tabs, setTabs] = useState(1);
     const [isGrid, setIsGrid] = useState(true);
-    const [searchTerm, setSearchTerm] = React.useState(''); 
+    const [searchTerm, setSearchTerm] = useState(''); 
+    
 
 
     const handleToggleView = (value) => {
@@ -49,33 +50,34 @@ export default function Dashboard() {
     useEffect(() => {
         getNotes();
     }, [noteCreated, tabs]);
-    useEffect(()=>{
-       handleSearch(searchTerm);
-    },[searchTerm]);
+    // useEffect(()=>{
+    //    handleSearch(searchTerm);
+    // },[searchTerm]);
     
     const filtered = note.filter(item => {
       if (tabs === 1 && !item.isTrash && !item.isArch) {
-          return true;
+        return item.title.includes(searchTerm) || item.description.includes(searchTerm);
       } else if (tabs === 4 && item.isArch) {
-          return true;
+        return item.title.includes(searchTerm) || item.description.includes(searchTerm);
       } else if (tabs === 5 && item.isTrash) {
-          return true;
+        return item.title.includes(searchTerm) || item.description.includes(searchTerm);
       }
       return false;
   });
   
-
-    console.log("Filtered notes:", filtered);
     
-    const function_1 = ()=>
-    {
-       console.log("message is called--------->");
+    // const function_1 = ()=>
+    // {
+    //    console.log("message is called--------->");
+    // }
+    const filt = (value)=>{
+          setSearchTerm(value);
     }
     return (
         <div style={{ backgroundColor: "#202124", height: '100vh', minHeight: '100vh' }}>
-            <Header handleView={handleToggleView} handleSearch={handleSearch} setSearchTerm={setSearchTerm} searchTerm={searchTerm} function_1={function_1} />
+            {/* <Header handleView={handleToggleView} filt={filt}  /> */}
             
-            <SideNav setTabs={setTabs} handleToggleView={handleToggleView} />
+            <SideNav setTabs={setTabs} handleToggleView={handleToggleView} filt={filt}/>
             
             <div className="search">
                 <InputNote setNoteCreated={setNoteCreated} noteCreated={noteCreated} />
@@ -92,7 +94,7 @@ export default function Dashboard() {
                         isGrid={isGrid} 
                     />
                 ) : (
-                    <p>No notes available</p> 
+                    <p style={{color:'white'}}>No notes available</p> 
                 )}
             </div>
         </div>
