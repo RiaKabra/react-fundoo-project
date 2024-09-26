@@ -87,7 +87,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export default function SideNav({ setTabs,handleToggleView }) {
+export default function SideNav({ setTabs,handleToggleView ,filt}) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -100,6 +100,10 @@ export default function SideNav({ setTabs,handleToggleView }) {
     };
     const handleView = (value) =>{
         handleToggleView(value);
+    }
+
+    const searchNotes=(value)=>{
+          filt(value);
     }
     const icon = [
         <LightbulbOutlinedIcon />,
@@ -134,7 +138,7 @@ export default function SideNav({ setTabs,handleToggleView }) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        <Header handleView={handleView}/>
+                        <Header handleView={handleView} searchNotes={searchNotes}/>
                     </Typography>
                 </Toolbar>
             </AppBar>
